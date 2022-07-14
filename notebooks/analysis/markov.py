@@ -67,16 +67,21 @@ class MarkovGrapher(AnalyticsGrapher):
         G = nx.DiGraph()
         destinations = self.bounded_object.residence_seqs[residence]
         edge_labels = {}
-        for country, prob in destinations.items():
-            G.add_edge(residence, country, weight=prob, label=prob)
-            edge_labels[(residence, country)] = round(prob, 4)
+        for i, (country, prob) in enumerate(destinations.items()):
+            G.add_edge(residence, country, weight=prob)
+            edge_labels[(residence, country)] = prob
         self._visualize_graph(G, edge_labels)
 
 
     def _visualize_graph(self, G: nx.Graph, edge_labels: typing.Dict[tuple, float]):
         pos = nx.spring_layout(G)
         nx.draw(G, pos, with_labels=True)
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, label_pos=0.5)
+        for u, v, ddict in G.edges(data=True):
+            node1_x, node1_y = pos[u]
+            node2_x, node2_y = pos[v]
+            x_mid = (node1_x + node2_x) / 2
+            y_mid = (node1_y + node2_y + (0.3 * int(u == v))) / 2
+            plt.text(x_mid, y_mid, str(round(ddict['weight'],4)), bbox=dict(facecolor='red', alpha=0.8), ha='center', va='center')
         plt.show()
 
 
