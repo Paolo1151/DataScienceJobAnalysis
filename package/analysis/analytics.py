@@ -26,14 +26,6 @@ class AnalyticsAnalyzer(BaseProcessor):
     def __init__(self, name, bounded_object: AnalyticsObject, expected_object_type: type = BaseObject):
         super().__init__(name + " Analyzer", bounded_object, expected_object_type)
 
-    @abstractmethod
-    def analyze(self):
-        pass
-
 class AnalyticsGrapher(BaseProcessor):
     def __init__(self, name, bounded_object: AnalyticsObject, expected_object_type: type = BaseObject):
         super().__init__(name + " Grapher", bounded_object, expected_object_type)
-
-    @abstractmethod
-    def graph(self):
-        pass
