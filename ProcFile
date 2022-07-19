@@ -1,1 +1,2 @@
-web: sh setup.sh && cd app && streamlit run Home.py
+release: sh setup.sh && cd app
+web: streamlit run Home.py
