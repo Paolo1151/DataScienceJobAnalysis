@@ -11,8 +11,8 @@ from config import settings
 
 
 class DashMode(Enum):
-    TABLE = 1
-    CHART = 2
+    CHART = 1
+    TABLE = 2
 
 
 class Dashboard():
