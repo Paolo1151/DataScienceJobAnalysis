@@ -11,6 +11,8 @@ IMAGE_PATH = os.path.join(CONTENT_PATH, 'img')
 Singleton Instances
 '''
 from utils.render import Renderer
+from utils.dashrenderer import Dashboard
 
 RENDERER = Renderer()
+DASHBOARD = Dashboard()
 

@@ -93,9 +93,6 @@ class Renderer():
         with open(os.path.join(settings.CONTENT_PATH, "conclusion.md"), "r") as f:
             st.markdown(f.read())
 
-    def _render_appendix(self):
-        st.title("Appendix")
-
     @staticmethod
     def get_page_list():
         return list(map(lambda x: x.name.capitalize(), Page))
