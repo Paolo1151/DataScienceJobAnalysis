@@ -55,19 +55,17 @@ class Renderer():
             md = re.split(r"{Interactive Data Explorer \d}", f.read())
 
         st.markdown(md[0])
-        self._render_dataexplorer_1()
+        eda = Image.open(os.path.join(settings.IMAGE_PATH, 'q1.jpg'))
+        st.image(eda)
         st.markdown(md[1])
         self._render_dataexplorer_2()
         st.markdown(md[2])
 
-    def _render_dataexplorer_1(self):
-        questions = [
-            ""
-        ]
-
     def _render_dataexplorer_2(self):
         unique_residence = self.df['Country Name'].unique().tolist()
         
+        is_reverse = st.checkbox("Generate Network going to a Country?", value=False)
+
         residence = st.selectbox(
             'Employee Residence',
             unique_residence
@@ -75,7 +73,16 @@ class Renderer():
 
         iso_cc_residence = self.iso_cc[self.iso_cc['Country Name'] == residence]['Code'].values[0]
         
-        curr_fig = self.netrender.graph_network(iso_cc_residence, f"Markov Chain of Migration of Data Scientists from {residence} to other Countries")
+        if is_reverse:
+            title = f"Markov Chain of Migration of Data Scientists to {residence} from other Countries"
+        else:
+            title = f"Markov Chain of Migration of Data Scientists from {residence} to other Countries"
+
+        curr_fig = self.netrender.graph_network(
+            iso_cc_residence,
+            title, 
+            reverse=is_reverse
+        )
         
         st.pyplot(fig=curr_fig)
 
@@ -97,6 +104,7 @@ class Renderer():
 class NetworkRenderer():
     def __init__(self, df):
         self._create_graph_dict(df)
+        self._create_reverse_graph_dict(df)
 
     def _create_graph_dict(self, df):
         init_residence = dict(zip(df['employee_residence'].unique(), [dict() for i in range(df['employee_residence'].nunique())]))
@@ -119,19 +127,44 @@ class NetworkRenderer():
             residence_seqs[employee_residence] = counts
 
         self.residence_seq = residence_seqs
+
+    def _create_reverse_graph_dict(self, df):
+        init_residence = dict(zip(df['company_location'].unique(), [dict() for i in range(df['company_location'].nunique())]))
+        for i, row in df.iterrows():
+            if row['employee_residence'] in init_residence[row['company_location']]:
+                init_residence[row['company_location']][row['employee_residence']] += 1
+            else:
+                init_residence[row['company_location']][row['employee_residence']] = 1
+
+        to_delete = []
+        residence_seqs = {}
+        for employee_residence, counts in init_residence.items():
+            total_cnts = sum(counts.values())
+
+            if total_cnts == 1:
+                to_delete.append(employee_residence)
+
+            for country, count in counts.items():
+                counts[country] = count / total_cnts
+            residence_seqs[employee_residence] = counts
+
+        self.reverse_residence_seq = residence_seqs
     
-    def graph_network(self, residence, title):
+    def graph_network(self, residence, title, reverse=False):
         fig = plt.figure(figsize=(6, 6))
 
-        graph_dict = self.residence_seq
+        graph_dict = self.reverse_residence_seq if reverse else self.residence_seq 
 
-        G = nx.DiGraph()
+        G = nx.Graph()
         destinations = graph_dict[residence]
         edge_labels = {}
         for i, (country, prob) in enumerate(destinations.items()):
-            G.add_edge(residence, country, weight=prob *100)
-            edge_labels[(residence, country)] = prob
-
+            if reverse:
+                G.add_edge(country, residence, weight=prob)
+                edge_labels[(country, residence)] = prob
+            else:
+                G.add_edge(residence, country, weight=prob)
+                edge_labels[(residence, country)] = prob
         node_sizes = []
         node_colors = []
         for u, ddict in G.nodes(data=True):
@@ -153,5 +186,6 @@ class NetworkRenderer():
         plt.title(title)
 
         return fig
+
 
 
