@@ -14,7 +14,6 @@ class Page(Enum):
     INTRODUCTION = 1
     ANALYSIS = 2
     CONCLUSION = 3
-    APPENDIX = 4
 
 
 class Renderer():
@@ -32,8 +31,6 @@ class Renderer():
             self._render_analysis()
         elif page == Page.CONCLUSION:
             self._render_conclusion()
-        elif page == Page.APPENDIX:
-            self._render_appendix()
         else:
             raise Exception("Unknown page")
 
