@@ -1,2 +1,0 @@
-release: sh setup.sh && cd app
-web: streamlit run Home.py
