@@ -24,13 +24,13 @@ https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century
 
 With this, this project aims to answer the following questions:
 
-* How does the Salary amongst Data Science Jobs vary according to different Parameters?
+* How does the Salary amongst Data Science Jobs change throughout the years?
 * Where do Data Scientists go to work coming from a country of origin?
 
 
 The purpose of this study is to be able to:
 
-* Understand the trends in the Data Science Market in terms of different parameters
+* Understand the trends in the Data Science Salaries in terms of different parameters
 * Understand Data Scientist Migration Patterns
 ----
 
