@@ -1,6 +1,8 @@
-## How does the Salary amongst Data Science Jobs vary according to different Parameters?
+## How does the Salary amongst Data Science Jobs throughout the years in terms of Experience Level and Field?
 
 {Interactive Data Explorer 1}
+
+There are a lot of slices that can be done in the records of Data Science Jobs, but for this analysis, I decided to see how the salary of different Data Science Roles change according to Experience level over the years. To test out how the salary amongst different data Science Job differs throughout the years in different variables, feel free to explore this in the Dashboard.
 
 The heatmaps above visualize the mean of the Data Science Salaries over the years per field. Along with it, it was also filtered over per experience level to see how much the mean of the Data Science Salaries changed over the years per experience level.
 
@@ -36,25 +38,25 @@ A Simple Note: You may find the Network rendered above by selecting the country 
 Notated below is the proportion of Data Scientists originating from that country that work in/for local companies vs foreign companies.
 
 
-Country | Local Proportion | Foreign Proportion
----------|-------------------|-------------------
-United States (US) | 0.994 | 0.006
-United Kingdom (UK/GB) | 0.977 | 0.023
-Canada (CA) | 0.966 | 0.034
-Germany (DE) | 0.920 | 0.080
-India (IN) | 0.800 | 0.200
+Country | Local Proportion | Foreign Proportion | Count
+---------|-------------------|------------------- | ---------
+United States (US) | 0.994 | 0.006 | 354
+United Kingdom (UK/GB) | 0.977 | 0.023 | 37 
+Canada (CA) | 0.966 | 0.034 | 30
+Germany (DE) | 0.920 | 0.080 | 28
+India (IN) | 0.800 | 0.200 | 24
 
 From the top 5 samples, we can see that majority of the Data Scientists originating from the United States stay there and work for United States Companies with only a little of the US-originating Data Scientists migrate and work for foreign companies. This trend is also seen in the United Kingdom and Canada with greater than 95% of the proportion of Data Scientists staying to work for local companies. Germany has a lower proportion of Data Scientists staying to work for local companies, but is still quite high with a 92% probability of working for local companies. India, however, seems to have the lowest among the top 5 countries with only 80% of the Data Scientist staying to work for local companies and 20% migrating to other countries to work for local companies.
 
 Let's look at it in a different perspective. Graphing the network of the top 5 countries with the highest amount of Data Scientist Records, we can check how much of the country's Data Scientist population is coming from local Data Scientists and Foreign Data Scientists. Notated below is how much of the Country's Data Science Manpower are local and foreign
 
-Country | Local Data Scientist Proportion | Foreign Data Scientist Proportion
----------|-------------------|-------------------
-United States (US) | 0.9294 | 0.0706
-United Kingdom (UK/GB) | 0.9149 | 0.0851
-Canada (CA) | 0.9333 | 0.0667
-Germany (DE) | 0.8214 | 0.1786
-India (IN) | 1.0000 | 0.0000
+Country | Local Data Scientist Proportion | Foreign Data Scientist Proportion | Count
+---------|-------------------|------------------- | -----------
+United States (US) | 0.9294 | 0.0706 | 331
+United Kingdom (UK/GB) | 0.9149 | 0.0851 | 44
+Canada (CA) | 0.9333 | 0.0667 | 29
+Germany (DE) | 0.8214 | 0.1786 | 25
+India (IN) | 1.0000 | 0.0000 | 30
 
 Some interesting insights come from these data. First, Germany has the highest foreign Data Science population compared to other countries. Second, India's Data Science Manpower is purely local. Lastly, the other top 5 countries has a high amount of local power (> 90% of the Data Scientist Population). 
 
