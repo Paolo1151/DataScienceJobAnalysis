@@ -12,8 +12,9 @@ from config import settings
 
 class Page(Enum):
     INTRODUCTION = 1
-    ANALYSIS = 2
-    CONCLUSION = 3
+    DATASET = 2
+    ANALYSIS = 3
+    CONCLUSION = 4
 
 
 class Renderer():
@@ -27,6 +28,8 @@ class Renderer():
         page = Page[page_str.upper()]
         if page == Page.INTRODUCTION:
             self._render_home()
+        elif page == Page.DATASET:
+            self._render_dataset()
         elif page == Page.ANALYSIS:
             self._render_analysis()
         elif page == Page.CONCLUSION:
@@ -44,6 +47,11 @@ class Renderer():
         st.image(method, width=600)
 
         st.markdown(md[1])
+
+    def _render_dataset(self):
+        with open(os.path.join(settings.CONTENT_PATH, "dataset.md"), "r") as f:
+            md = f.read()
+        st.markdown(md)
 
     def _render_analysis(self):
         st.title("Analysis")

@@ -47,3 +47,4 @@ The Data used in this study is limited to the dataset provided from Kaggle. (htt
 
 This study will follow a simple procedure to answer the questions. As with any dataset, the dataset is preprocessed and new features based on domain knowledge are added before any analysis is done. Once the dataset is cleaned, basic graphs are created and examined in order to understand the dataset and the trends in the Data Science Market. Lastly, to understand Data Scientist Migration Patterns, a Markov Chain is graphed and analyzed to determine the probability of a Data Scientist migrating from one country to another. 
 
+To get the country name based off the ISO 3166 Country Code, data from https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes was scraped and placed into a dataset.
