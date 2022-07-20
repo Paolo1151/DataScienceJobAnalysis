@@ -3,12 +3,11 @@ import typing
 from enum import Enum
 
 import streamlit as st
+import streamlit.components.v1 as stc
 import pandas as pd
 import plotly.graph_objects as go
 
 from config import settings
-
-
 
 class DashMode(Enum):
     CHART = 1
@@ -34,27 +33,33 @@ class Dashboard():
 
     def _render_chart(self, filters: typing.Dict[str, typing.List[object]]):
         st.title("Data Science Salaries Chart View")
-        
-        columns = st.columns(3)
-        
-        for year, column in zip([2020, 2021, 2022], columns):
-            with column:
-                st.title(year)
-                temp_filters = filters.copy()
-                temp_filters.update({'work_year': [year]})
-                curr_df = Dashboard._apply_filters(self.df, temp_filters)
-                fig_top = self._render_column_dash(curr_df)
-                st.plotly_chart(fig_top)
 
+        first_row = st.columns([2.5, 1])
+
+        with first_row[0]:
+            st.header("Data Scientist Attributes throughout the Years")
+            sel_col = st.selectbox("Column to view", self.df.drop(columns=['work_year']).columns)
+            curr_df = Dashboard._apply_filters(self.df, filters)
+            fig_top = self._render_column_dash(curr_df, sel_col)
+            st.plotly_chart(fig_top, use_container_width=True)
+
+        with first_row[1]:
+            st.header("Network of Data Scientist Residences to Company Locations")
+            with open(os.path.join(settings.CONTENT_PATH, "pyvis_graph.html"), "r") as f:
+                html = f.read()
+            stc.html(html, height=500)
+            
         # Generate Line Plot
         fig = go.Figure()
         for field in self.df['field'].unique():
             temp_filters = filters.copy()
             temp_filters.update({'field': [field]})
             curr_df = Dashboard._apply_filters(self.df, temp_filters)
+            curr_df = curr_df.groupby(['work_year']).mean().reset_index()
             fig.add_trace(
-                go.Scatter(x=["2020", "2021", "2022"], y=curr_df['salary_in_usd'], mode='lines+markers', name=field)
+                go.Scatter(x=curr_df['work_year'], y=curr_df['salary_in_usd'], mode='lines+markers', name=field)
             )
+        fig.update_xaxes(range=[2020, 2022], dtick=1)
 
         st.header("Changes in Salary by Field")
 
@@ -74,13 +79,33 @@ class Dashboard():
 
 
 
-    def _render_column_dash(self, df):
-        fig_top = go.Figure(data=[go.Histogram(x=df['salary_in_usd'])])
+    def _render_column_dash(self, df, sel_col, override_type=None):
+        if df[sel_col].dtype == object or override_type == object:
+            fig_top = go.Figure()
+            for year in sorted(df['work_year'].unique().tolist()):
+                fig_top.add_trace(
+                    go.Bar(
+                        y=self.df[self.df['work_year']==year][sel_col].unique(),
+                        x=df[df['work_year']==year][sel_col].value_counts().values,
+                        name=str(year),
+                        orientation='h',
+                        # To add Marker
+                    )
+                )
+            fig_top.update_layout(barmode='stack')
+            max_value_g = self.df[sel_col].value_counts().max()
+            fig_top.update_xaxes(range=[0, max_value_g])
+        else:
+            fig_top = go.Figure()
+            for year in sorted(df['work_year'].unique().tolist()):
+                fig_top.add_trace(
+                    go.Histogram(
+                        x=df[df['work_year']==year][sel_col],
+                        name=str(year)
+                    )
+                )
+            
         return fig_top
-        
-    def _render_main_line_chart(self, df):
-
-        return fig
 
 
     def get_df(self):

@@ -71,9 +71,9 @@ class Renderer():
         iso_cc_residence = self.iso_cc[self.iso_cc['Country Name'] == residence]['Code'].values[0]
         
         if is_reverse:
-            title = f"Markov Chain of Migration of Data Scientists to {residence} from other Countries"
+            title = f"Network of Migration of Data Scientists to {residence} from other Countries"
         else:
-            title = f"Markov Chain of Migration of Data Scientists from {residence} to other Countries"
+            title = f"Network of Migration of Data Scientists from {residence} to other Countries"
 
         curr_fig = self.netrender.graph_network(
             iso_cc_residence,

@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 465px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "DE", "label": "DE", "shape": "dot", "size": 10}, {"id": "PK", "label": "PK", "shape": "dot", "size": 10}, {"id": "US", "label": "US", "shape": "dot", "size": 10}, {"id": "AT", "label": "AT", "shape": "dot", "size": 10}, {"id": "RS", "label": "RS", "shape": "dot", "size": 10}, {"id": "NL", "label": "NL", "shape": "dot", "size": 10}, {"id": "FR", "label": "FR", "shape": "dot", "size": 10}, {"id": "JP", "label": "JP", "shape": "dot", "size": 10}, {"id": "MY", "label": "MY", "shape": "dot", "size": 10}, {"id": "GB", "label": "GB", "shape": "dot", "size": 10}, {"id": "PL", "label": "PL", "shape": "dot", "size": 10}, {"id": "CA", "label": "CA", "shape": "dot", "size": 10}, {"id": "VN", "label": "VN", "shape": "dot", "size": 10}, {"id": "RO", "label": "RO", "shape": "dot", "size": 10}, {"id": "HK", "label": "HK", "shape": "dot", "size": 10}, {"id": "HN", "label": "HN", "shape": "dot", "size": 10}, {"id": "PT", "label": "PT", "shape": "dot", "size": 10}, {"id": "GR", "label": "GR", "shape": "dot", "size": 10}, {"id": "PH", "label": "PH", "shape": "dot", "size": 10}, {"id": "RU", "label": "RU", "shape": "dot", "size": 10}, {"id": "ES", "label": "ES", "shape": "dot", "size": 10}, {"id": "IN", "label": "IN", "shape": "dot", "size": 10}, {"id": "BG", "label": "BG", "shape": "dot", "size": 10}, {"id": "BR", "label": "BR", "shape": "dot", "size": 10}, {"id": "HU", "label": "HU", "shape": "dot", "size": 10}, {"id": "IT", "label": "IT", "shape": "dot", "size": 10}, {"id": "PR", "label": "PR", "shape": "dot", "size": 10}, {"id": "BO", "label": "BO", "shape": "dot", "size": 10}, {"id": "NZ", "label": "NZ", "shape": "dot", "size": 10}, {"id": "LU", "label": "LU", "shape": "dot", "size": 10}, {"id": "CH", "label": "CH", "shape": "dot", "size": 10}, {"id": "AS", "label": "AS", "shape": "dot", "size": 10}, {"id": "CN", "label": "CN", "shape": "dot", "size": 10}, {"id": "JE", "label": "JE", "shape": "dot", "size": 10}, {"id": "DK", "label": "DK", "shape": "dot", "size": 10}, {"id": "AE", "label": "AE", "shape": "dot", "size": 10}, {"id": "MX", "label": "MX", "shape": "dot", "size": 10}, {"id": "AR", "label": "AR", "shape": "dot", "size": 10}, {"id": "NG", "label": "NG", "shape": "dot", "size": 10}, {"id": "HR", "label": "HR", "shape": "dot", "size": 10}, {"id": "SG", "label": "SG", "shape": "dot", "size": 10}, {"id": "IL", "label": "IL", "shape": "dot", "size": 10}, {"id": "IQ", "label": "IQ", "shape": "dot", "size": 10}, {"id": "BE", "label": "BE", "shape": "dot", "size": 10}, {"id": "UA", "label": "UA", "shape": "dot", "size": 10}, {"id": "MT", "label": "MT", "shape": "dot", "size": 10}, {"id": "CL", "label": "CL", "shape": "dot", "size": 10}, {"id": "IR", "label": "IR", "shape": "dot", "size": 10}, {"id": "CO", "label": "CO", "shape": "dot", "size": 10}, {"id": "MD", "label": "MD", "shape": "dot", "size": 10}, {"id": "KE", "label": "KE", "shape": "dot", "size": 10}, {"id": "SI", "label": "SI", "shape": "dot", "size": 10}, {"id": "TR", "label": "TR", "shape": "dot", "size": 10}, {"id": "CZ", "label": "CZ", "shape": "dot", "size": 10}, {"id": "TN", "label": "TN", "shape": "dot", "size": 10}, {"id": "DZ", "label": "DZ", "shape": "dot", "size": 10}, {"id": "EE", "label": "EE", "shape": "dot", "size": 10}, {"id": "AU", "label": "AU", "shape": "dot", "size": 10}, {"id": "IE", "label": "IE", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "DE", "label": 1, "to": "DE", "weight": 1}, {"from": "DE", "label": 1, "to": "PK", "weight": 1}, {"from": "DE", "label": 1, "to": "US", "weight": 1}, {"from": "DE", "label": 1, "to": "AT", "weight": 1}, {"from": "DE", "label": 1, "to": "RS", "weight": 1}, {"from": "DE", "label": 1, "to": "NL", "weight": 1}, {"from": "DE", "label": 1, "to": "FR", "weight": 1}, {"from": "JP", "label": 1, "to": "JP", "weight": 1}, {"from": "JP", "label": 1, "to": "MY", "weight": 1}, {"from": "GB", "label": 1, "to": "GB", "weight": 1}, {"from": "GB", "label": 1, "to": "PL", "weight": 1}, {"from": "GB", "label": 1, "to": "CA", "weight": 1}, {"from": "GB", "label": 1, "to": "VN", "weight": 1}, {"from": "GB", "label": 1, "to": "RO", "weight": 1}, {"from": "GB", "label": 1, "to": "HK", "weight": 1}, {"from": "HN", "label": 1, "to": "HN", "weight": 1}, {"from": "US", "label": 1, "to": "US", "weight": 1}, {"from": "US", "label": 1, "to": "PT", "weight": 1}, {"from": "US", "label": 1, "to": "GR", "weight": 1}, {"from": "US", "label": 1, "to": "PH", "weight": 1}, {"from": "US", "label": 1, "to": "RU", "weight": 1}, {"from": "US", "label": 1, "to": "ES", "weight": 1}, {"from": "US", "label": 1, "to": "IN", "weight": 1}, {"from": "US", "label": 1, "to": "BG", "weight": 1}, {"from": "US", "label": 1, "to": "BR", "weight": 1}, {"from": "US", "label": 1, "to": "HU", "weight": 1}, {"from": "US", "label": 1, "to": "PK", "weight": 1}, {"from": "US", "label": 1, "to": "VN", "weight": 1}, {"from": "US", "label": 1, "to": "RO", "weight": 1}, {"from": "US", "label": 1, "to": "FR", "weight": 1}, {"from": "US", "label": 1, "to": "IT", "weight": 1}, {"from": "US", "label": 1, "to": "CA", "weight": 1}, {"from": "US", "label": 1, "to": "PR", "weight": 1}, {"from": "US", "label": 1, "to": "MY", "weight": 1}, {"from": "US", "label": 1, "to": "BO", "weight": 1}, {"from": "HU", "label": 1, "to": "HU", "weight": 1}, {"from": "NZ", "label": 1, "to": "NZ", "weight": 1}, {"from": "FR", "label": 1, "to": "FR", "weight": 1}, {"from": "FR", "label": 1, "to": "LU", "weight": 1}, {"from": "FR", "label": 1, "to": "ES", "weight": 1}, {"from": "IN", "label": 1, "to": "IN", "weight": 1}, {"from": "IN", "label": 1, "to": "CH", "weight": 1}, {"from": "IN", "label": 1, "to": "AS", "weight": 1}, {"from": "PK", "label": 1, "to": "PK", "weight": 1}, {"from": "PL", "label": 1, "to": "IT", "weight": 1}, {"from": "PL", "label": 1, "to": "PL", "weight": 1}, {"from": "PT", "label": 1, "to": "PT", "weight": 1}, {"from": "PT", "label": 1, "to": "LU", "weight": 1}, {"from": "CN", "label": 1, "to": "CN", "weight": 1}, {"from": "CN", "label": 1, "to": "JE", "weight": 1}, {"from": "GR", "label": 1, "to": "GR", "weight": 1}, {"from": "GR", "label": 1, "to": "DK", "weight": 1}, {"from": "AE", "label": 1, "to": "AE", "weight": 1}, {"from": "NL", "label": 1, "to": "NL", "weight": 1}, {"from": "MX", "label": 1, "to": "MX", "weight": 1}, {"from": "MX", "label": 1, "to": "AR", "weight": 1}, {"from": "CA", "label": 1, "to": "CA", "weight": 1}, {"from": "AT", "label": 1, "to": "AT", "weight": 1}, {"from": "NG", "label": 1, "to": "NG", "weight": 1}, {"from": "ES", "label": 1, "to": "ES", "weight": 1}, {"from": "ES", "label": 1, "to": "RO", "weight": 1}, {"from": "DK", "label": 1, "to": "DK", "weight": 1}, {"from": "RU", "label": 1, "to": "RU", "weight": 1}, {"from": "IT", "label": 1, "to": "IT", "weight": 1}, {"from": "HR", "label": 1, "to": "HR", "weight": 1}, {"from": "LU", "label": 1, "to": "LU", "weight": 1}, {"from": "SG", "label": 1, "to": "SG", "weight": 1}, {"from": "SG", "label": 1, "to": "IL", "weight": 1}, {"from": "BR", "label": 1, "to": "BR", "weight": 1}, {"from": "IQ", "label": 1, "to": "IQ", "weight": 1}, {"from": "VN", "label": 1, "to": "VN", "weight": 1}, {"from": "BE", "label": 1, "to": "BE", "weight": 1}, {"from": "UA", "label": 1, "to": "UA", "weight": 1}, {"from": "MT", "label": 1, "to": "MT", "weight": 1}, {"from": "CL", "label": 1, "to": "CL", "weight": 1}, {"from": "IR", "label": 1, "to": "IR", "weight": 1}, {"from": "CO", "label": 1, "to": "CO", "weight": 1}, {"from": "MD", "label": 1, "to": "MD", "weight": 1}, {"from": "KE", "label": 1, "to": "KE", "weight": 1}, {"from": "SI", "label": 1, "to": "SI", "weight": 1}, {"from": "CH", "label": 1, "to": "CH", "weight": 1}, {"from": "TR", "label": 1, "to": "TR", "weight": 1}, {"from": "CZ", "label": 1, "to": "CZ", "weight": 1}, {"from": "CZ", "label": 1, "to": "TN", "weight": 1}, {"from": "DZ", "label": 1, "to": "DZ", "weight": 1}, {"from": "EE", "label": 1, "to": "EE", "weight": 1}, {"from": "AU", "label": 1, "to": "AU", "weight": 1}, {"from": "IE", "label": 1, "to": "IE", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
